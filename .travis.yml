@@ -16,3 +16,10 @@ after_success:
   - docker build -t sameerdk12/multi-nginx ./nginx
   - docker build -t sameerdk12/multi-server ./server
   - docker build -t sameerdk12/multi-worker ./worker
+  # Log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push sameerdk12/multi-client
+  - docker push sameerdk12/multi-nginx
+  - docker push sameerdk12/multi-server
+  - docker push sameerdk12/multi-worker
