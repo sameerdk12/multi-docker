@@ -1,0 +1,18 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t sameerdk12/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true sameerdk12/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t sameerdk12/multi-client ./client
+  - docker build -t sameerdk12/multi-nginx ./nginx
+  - docker build -t sameerdk12/multi-server ./server
+  - docker build -t sameerdk12/multi-worker ./worker
